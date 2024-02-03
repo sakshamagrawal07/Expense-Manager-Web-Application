@@ -1,0 +1,90 @@
+body{
+	height: 100vh;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	/* background-color: aqua; */
+	background-image: url("https://wallpapersmug.com/download/1920x1080/b66357/blue-theme-minimal-art-montains-and-forest.jpg");
+	/* background-image: url("https://png.pngtree.com/png-clipart/20210413/ourmid/pngtree-cartoon-clouds-baiyun-cloud-cloud-png-image_3210973.jpg"); */
+	background-repeat: no-repeat;
+	background-size: cover;
+}
+
+h1{
+	display: flex;
+	justify-content: center;
+	color: aliceblue;
+}
+.container{
+	display: flex;
+	justify-content: center;
+	/* background-color: aqua; */
+	border: 0.5px solid rgba(255, 255, 255, 0.258);
+	border-radius: 15px;
+	width: 60%;
+	height: 60%;
+	padding: 10px;
+	background: rgba(255, 255, 255,0.08);
+	backdrop-filter: blur(10px);
+}
+.sign-in{
+	/* background-color: brown ; */
+	padding: 5px;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	flex-wrap: wrap;
+	align-items: center;
+	width: 50%;
+	border-right:2px solid rgba(255, 255, 255, 0.218) ;
+}
+.sign-up{
+	/* background-color: brown ; */
+	padding: 5px;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	flex-wrap: wrap;
+	align-items: center;
+	width: 50%;
+}
+#in-cover{
+	display: none;
+}
+#up-input{
+	display: none;
+}
+::placeholder{
+	color: rgba(245, 245, 245, 0.488);
+}
+a{
+	color: white;
+	text-decoration: none;
+	align-content: left;
+}
+input{
+	display: flex;
+	justify-content: center;
+	border: none;
+	border-bottom: 0.5px solid rgba(255, 255, 255, 0.258);
+	border-radius: 5px;
+	margin: 5px;
+	width: 90%;
+	height: 2.5em;
+	background: none;
+	padding: 5px;
+	color: whitesmoke;
+}
+input:focus{
+	border-bottom: 0.5px solid rgba(255, 255, 255, 0.258);
+}
+button{
+	width: 40%;
+	height: 10%;
+	margin: 1.5em;
+	font-size: 1.05em;
+	border: 0.5px solid white;
+	border-radius: 10px;
+	background: rgba(255, 255, 255, 0.605);
+	backdrop-filter: blur(10px);
+}
