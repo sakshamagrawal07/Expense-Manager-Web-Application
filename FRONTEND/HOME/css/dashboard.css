@@ -1,9 +1,17 @@
+:root{
+    --list-background : #E1F0DA;
+    --highlight-text : #818189;
+    --border-color : #fff;
+}
+
 #dashboard-contents{
     display: flex;
     flex-direction: column;
     height: 100%;
-    color: #281d60;
+    /* color: #281d60;
+    color: #37306B; */
     padding: 15px;
+    background: transparent;
 }
 
 .dashboard-data{
@@ -20,9 +28,13 @@
 }
 
 .chart{
-    width: 100%;
+    width: 95%;
     height: 55%;
-    background-color: olivedrab;
+    margin-top: 10px;
+    background-color: var(--list-background);
+    border: 2px solid var(--border-color);
+    border-radius: 15px;
+    padding: 0 20px;
 }
 
 .totals{
@@ -30,28 +42,29 @@
     flex-direction: column;
     justify-content:center;
     align-items: center;
+    padding-top: 15px;
 }
 
 .income-expense{
     width: 100%;
-    height: 50%;
+    height: 45%;
     display: flex;
     align-items: center;
     justify-content: space-between;
 }
 
 .income-expense > div, .totals > .balance{
-    height: 6rem;
+    height: 5rem;
     width: 40%;
     padding: 15px;
     overflow: hidden;
-    background-color: #f4f4f8;
-    border: 2px solid #fff;
+    background-color: var(--list-background);
+    border: 2px solid var(--border-color);
     border-radius: 15px;
 }
 
 .income-expense > div > p, .balance > p{
-    font-size: 3em;
+    font-size: 2.5em;
     font-weight: 700;
     color: #686081;
 }
@@ -86,8 +99,8 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: #f4f4f8;
-    border: 2px solid #fff;
+    background-color: var(--list-background);
+    border: 2px solid var(--border-color);
     border-radius: 14px;
     height: 2rem;
     padding: 10px;
@@ -109,5 +122,34 @@
 
 .min-max-list >p {
     font-size: larger;
-    color: #a29caa;
+    color: var(--highlight-text);
+}
+
+#transactions-contents{
+    padding-block: 15px;
+
+    .list{
+        width: 100%;
+        height: 625px;
+    }
+    .list > ul > li{
+        height: 50px;
+
+        .image{
+            height: 50px;
+            width: 5%;
+            font-size: 30px;
+        }
+        .data{
+            height: 80%;
+            margin-top: -5px;
+        }
+        .delete-btn{
+            justify-content: flex-end;
+            align-items: center;
+        }
+        .delete-btn > div{
+            width: 50%;
+        }
+    }
 }

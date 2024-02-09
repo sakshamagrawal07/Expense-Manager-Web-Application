@@ -1,8 +1,15 @@
+:root{
+    --list-background : #E1F0DA;
+    --highlight-text : #818189;
+	--placeholder-color : #0F2167;
+    --border-color : #fff;
+    --add-btn : #E6A4B4;
+}
+
 #income-contents,#expense-contents{
     display: flex;
     flex-direction: column;
     height: 100%;
-    color: #281d60;
     padding: 15px;
 }
 
@@ -14,7 +21,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: #faf6f9;
+    background-color: var(--list-background);
     width: inherit;
     margin: 15px 0;
     padding: 15px 0;
@@ -34,8 +41,7 @@
 
 .input>input , textarea{
     background: none;
-    color: #281d60;
-    border: 2px solid #fff;
+    border: 2px solid var(--border-color);
     border-radius: 3px;
     outline: none;
     padding: 10px;
@@ -45,7 +51,7 @@
 
 .input>input::placeholder,
 .input>textarea::placeholder{
-    color: #281d60;
+    color: var(--placeholder-color);
 }
 
 textarea{
@@ -54,7 +60,7 @@ textarea{
 }
 
 .input > button{
-    background-color: rgb(203, 98, 137);
+    background-color: var(--add-btn);
     color: #fff;
     border: none;
     outline: none;
@@ -68,7 +74,7 @@ textarea{
 }
 
 .input > button:hover{
-    background-color: #588f20;
+    background-color: #99BC85;
 }
 
 .list{
@@ -88,17 +94,17 @@ textarea{
     width: 95%;
     height: 100px;
     margin-bottom: 15px;
-    background-color: #faf6f9;
+    background-color: var(--list-background);
     border-radius: 15px;
-    border: 2px solid #fff;
+    border: 2px solid var(--border-color);
     padding: 15px;
     display: flex;
     align-items: center;
 }
 
 .image{
-    background-color: #f4f4f8;
-    border: 2px solid #fff;
+    background-color: var(--list-background);
+    border: 2px solid var(--border-color);
     border-radius: 15px;
     height: 90px;
     width: 12%;
@@ -111,7 +117,6 @@ textarea{
 .data{
     width: 80%;
     height: 90px;
-    /* background-color: #f4f4f8; */
     margin: 10px;
     padding: 10px;
     display: flex;
@@ -167,7 +172,7 @@ textarea{
     align-items: center;
     aspect-ratio: 1/1;
     width: 70%;
-    background-color: #281d60;
+    background-color: #0F2167;
     border-radius: 50%;
     font-size: 20px;
     color: #fff;
@@ -176,5 +181,5 @@ textarea{
 }
 
 .delete-btn > div:hover{
-    background-color: #281d60e1;
+    background-color: rgba(15, 33, 103, 0.922);
 }
