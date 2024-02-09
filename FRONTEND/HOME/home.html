@@ -14,7 +14,17 @@
 </head>
 
 <body>
+	<div class="orb"></div>
 	<div class="tabs">
+		<div class="profile">
+			<div class="profile-img">
+				<i class="fa-solid fa-user"></i>
+			</div>
+			<div class="username">
+				<h3>Name</h3>
+				<p>username</p>
+			</div>
+		</div>
 		<div class="btn">
 			<div class="border" style="background-color: #2d1f51d8;"></div>
 			<button id="dashboard" class="navigation" style="color: #2d1f51d8;">
@@ -24,7 +34,7 @@
 		<div class="btn">
 			<div class="border"></div>
 			<button id="transactions" class="navigation">
-				<div class="icon-text"><span class="icon"><i class="fa-solid fa-wallet"></i></span>View Transactions
+				<div class="icon-text"><span class="icon"><i class="fa-solid fa-wallet"></i></span>Transactions
 				</div>
 			</button>
 		</div>
@@ -53,7 +63,9 @@
 			<h1>All Transactions</h1>
 			<div class="dashboard-data">
 				<div class="chart-totals">
-					<div class="chart"></div>
+					<div class="chart">
+						<canvas id="inc-exp-chart"></canvas>
+					</div>
 					<div class="totals">
 						<div class="income-expense">
 							<div>
@@ -108,7 +120,46 @@
 				</div>
 			</div>
 		</div>
-		<div id="transactions-contents">Transactions</div>
+		<div id="transactions-contents">
+			<div class="list">
+				<ul>
+					<li>
+						<div class="image"><i class="fa-solid fa-piggy-bank"></i></div>
+						<div class="data">
+							<div class="heading">
+								<div class="dot" style="background-color: #6bb023;"></div>
+								<p>Bitcoin</p>
+							</div>
+							<div class="info">
+								<p><i class="fa-solid fa-indian-rupee-sign"></i>1000</p>
+								<p><i class="fa-solid fa-calendar"></i>28/01/2024</p>
+								<p><i class="fa-solid fa-comment"></i>This is a comment</p>
+							</div>
+						</div>
+						<div class="delete-btn">
+							<div><i class="fa-solid fa-trash"></i></div>
+						</div>
+					</li>
+					<li>
+						<div class="image"><i class="fa-solid fa-money-bill-wave"></i></div>
+						<div class="data">
+							<div class="heading">
+								<div class="dot" style="background-color: #e0211f;"></div>
+								<p>Bitcoin</p>
+							</div>
+							<div class="info">
+								<p><i class="fa-solid fa-indian-rupee-sign"></i>1000</p>
+								<p><i class="fa-solid fa-calendar"></i>28/01/2024</p>
+								<p><i class="fa-solid fa-comment"></i>This is a comment</p>
+							</div>
+						</div>
+						<div class="delete-btn">
+							<div><i class="fa-solid fa-trash"></i></div>
+						</div>
+					</li>
+				</ul>
+			</div>
+		</div>
 		<div id="income-contents">
 			<h1>Incomes</h1>
 			<div class="total">
@@ -136,9 +187,9 @@
 									<p><i class="fa-solid fa-indian-rupee-sign"></i>1000</p>
 									<p><i class="fa-solid fa-calendar"></i>28/01/2024</p>
 								</div>
-								<dv class="message">
+								<div class="message">
 									<p><i class="fa-solid fa-comment"></i>This is a comment</p>
-								</dv>
+								</div>
 							</div>
 							<div class="delete-btn">
 								<div><i class="fa-solid fa-trash"></i></div>
@@ -175,9 +226,9 @@
 									<p><i class="fa-solid fa-indian-rupee-sign"></i>1000</p>
 									<p><i class="fa-solid fa-calendar"></i>28/01/2024</p>
 								</div>
-								<dv class="message">
+								<div class="message">
 									<p><i class="fa-solid fa-comment"></i>This is a comment</p>
-								</dv>
+								</div>
 							</div>
 							<div class="delete-btn">
 								<div><i class="fa-solid fa-trash"></i></div>
@@ -188,7 +239,9 @@
 			</div>
 		</div>
 	</div>
-	<script src="script.js"></script>
+	<script src="scripts/script.js"></script>
+	<script src="node_modules/chart.js/dist/chart.umd.js"></script>
+	<script src="scripts/inc-exp-chart.js"></script>
 </body>
 
 </html>
