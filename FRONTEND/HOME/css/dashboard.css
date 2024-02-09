@@ -75,5 +75,39 @@
 .recent-min-max{
     width: 40%;
     height: 100%;
-    background-color: greenyellow;
+    padding-left: 25px;
+}
+
+.recent-min-max > h2{
+    margin-bottom: 15px;
+}
+
+.history-list,.min-max-list{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #f4f4f8;
+    border: 2px solid #fff;
+    border-radius: 14px;
+    height: 2rem;
+    padding: 10px;
+    margin-block: 10px;
+}
+
+.history-list > p{
+    font-size: 17px;
+}
+
+.min-max{
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    p{
+        font-weight: 700;
+    }
+}
+
+.min-max-list >p {
+    font-size: larger;
+    color: #a29caa;
 }
