@@ -168,11 +168,11 @@
 			</div>
 			<div class="input-list">
 				<div class="input">
-					<input type="text" placeholder="Income Title" name="title">
-					<input type="number" placeholder="Income Amount" name="amount" min="0">
-					<input type="date" name="date">
-					<textarea name="description" placeholder="Add a reference"></textarea>
-					<button>+ Add Income</button>
+					<input type="text" placeholder="Income Title" id="inc-title">
+					<input type="number" placeholder="Income Amount" id="inc-amount" min="0">
+					<input type="date" id="inc-date">
+					<textarea id="inc-description" placeholder="Add a reference"></textarea>
+					<button id="inc-add">+ Add Income</button>
 				</div>
 				<div class="list">
 					<ul>
@@ -207,11 +207,11 @@
 			</div>
 			<div class="input-list">
 				<div class="input">
-					<input type="text" placeholder="Expense Title" name="title">
-					<input type="number" placeholder="Expense Amount" name="amount" min="0">
-					<input type="date" name="date">
-					<textarea name="description" placeholder="Add a reference"></textarea>
-					<button>+ Add Expense</button>
+					<input type="text" placeholder="Expense Title" id="exp-title">
+					<input type="number" placeholder="Expense Amount" id="exp-amount" min="0">
+					<input type="date" id="exp-date">
+					<textarea id="exp-description" placeholder="Add a reference"></textarea>
+					<button id="exp-add">+ Add Expense</button>
 				</div>
 				<div class="list">
 					<ul>
@@ -242,6 +242,27 @@
 	<script src="scripts/change-tabs.js"></script>
 	<script src="node_modules/chart.js/dist/chart.umd.js"></script>
 	<script src="scripts/inc-exp-chart.js"></script>
+	<script src="scripts/data.js"></script>
+	<script>
+		// const body=document.getElementsByTagName("body")[0];
+		// var i=0,di=1;
+		// function fun(){
+		// 	body.style=`background: rgb(2,0,36);background: linear-gradient(194deg, rgba(2,0,36,1) 0%, rgba(9,9,121,1) ${i}%, rgba(0,212,255,1) 100%);`;
+		// }
+
+		// setInterval(
+		// 		()=>{
+		// 			fun();
+		// 			if(i<=0) di=1;
+		// 			if(i>=99) di=-1;
+
+		// 			i+=di;
+		// 			console.log(i)
+		// 		},1000
+		// 	)
+		
+
+	</script>
 </body>
 
 </html>
