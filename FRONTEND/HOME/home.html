@@ -70,16 +70,16 @@
 						<div class="income-expense">
 							<div>
 								<h2>Total Income</h2>
-								<p><i class="fa-solid fa-indian-rupee-sign"></i>16500</p>
+								<p id="dashboard-total-income"></p>
 							</div>
 							<div>
 								<h2>Total Expenses</h2>
-								<p><i class="fa-solid fa-indian-rupee-sign"></i>16500</p>
+								<p id="dashboard-total-expense"></p>
 							</div>
 						</div>
 						<div class="balance">
 							<h2>Total Expenses</h2>
-							<p><i class="fa-solid fa-indian-rupee-sign"></i>16500</p>
+							<p id="dashboard-total"></p>
 						</div>
 					</div>
 				</div>
@@ -101,7 +101,7 @@
 					</div>
 					<div class="min-max">
 						<p>Min</p>
-						<h2>Salary</h2>
+						<h2>Income</h2>
 						<p>Max</p>
 					</div>
 					<div class="min-max-list">
@@ -128,8 +128,7 @@
 		<div id="income-contents">
 			<h1>Incomes</h1>
 			<div class="total">
-				<h2>Total Income : <span style="color: #6fa33b;"><i
-							class="fa-solid fa-indian-rupee-sign"></i>1200</span></h2>
+				<h2>Total Income : <span id="income-total" style="color: #6fa33b;"></span></h2>
 			</div>
 			<div class="input-list">
 				<div class="input">
@@ -147,8 +146,7 @@
 		<div id="expense-contents">
 			<h1>Expenses</h1>
 			<div class="total">
-				<h2>Total Expense : <span style="color: #af2021;"> - <i
-							class="fa-solid fa-indian-rupee-sign"></i>1200</span></h2>
+				<h2>Total Expense : <span id="expense-total" style="color: #af2021;"></span></h2>
 			</div>
 			<div class="input-list">
 				<div class="input">
@@ -160,7 +158,7 @@
 				</div>
 				<div class="list">
 					<ul id="expense-list">
-						<li>
+						<!-- <li>
 							<div class="image"><i class="fa-solid fa-money-bill-wave"></i></div>
 							<div class="data">
 								<div class="heading">
@@ -178,7 +176,7 @@
 							<div class="delete-btn">
 								<div><i class="fa-solid fa-trash"></i></div>
 							</div>
-						</li>
+						</li> -->
 					</ul>
 				</div>
 			</div>
