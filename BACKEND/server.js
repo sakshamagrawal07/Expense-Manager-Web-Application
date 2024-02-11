@@ -17,7 +17,7 @@ app.post("/add-transaction", async (req, res) => {
             "category": req.body.category,
             "amount": req.body.amount,
             "description": req.body.description,
-            "date": req.body.data,
+            "date": req.body.date,
             "title": req.body.title
         })
         res.status(200).json({ "msg": "transaction added" })

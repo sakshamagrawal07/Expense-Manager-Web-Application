@@ -69,10 +69,6 @@
     color: #686081;
 }
 
-.balance > p{
-    color: #8cb950;
-}
-
 .balance > p > i, .income-expense > div > p > i{
     margin-right: 10px;
 }
