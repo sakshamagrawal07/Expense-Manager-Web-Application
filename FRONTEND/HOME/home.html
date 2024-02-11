@@ -122,42 +122,7 @@
 		</div>
 		<div id="transactions-contents">
 			<div class="list">
-				<ul>
-					<li>
-						<div class="image"><i class="fa-solid fa-piggy-bank"></i></div>
-						<div class="data">
-							<div class="heading">
-								<div class="dot" style="background-color: #6bb023;"></div>
-								<p>Bitcoin</p>
-							</div>
-							<div class="info">
-								<p><i class="fa-solid fa-indian-rupee-sign"></i>1000</p>
-								<p><i class="fa-solid fa-calendar"></i>28/01/2024</p>
-								<p><i class="fa-solid fa-comment"></i>This is a comment</p>
-							</div>
-						</div>
-						<div class="delete-btn">
-							<div><i class="fa-solid fa-trash"></i></div>
-						</div>
-					</li>
-					<li>
-						<div class="image"><i class="fa-solid fa-money-bill-wave"></i></div>
-						<div class="data">
-							<div class="heading">
-								<div class="dot" style="background-color: #e0211f;"></div>
-								<p>Bitcoin</p>
-							</div>
-							<div class="info">
-								<p><i class="fa-solid fa-indian-rupee-sign"></i>1000</p>
-								<p><i class="fa-solid fa-calendar"></i>28/01/2024</p>
-								<p><i class="fa-solid fa-comment"></i>This is a comment</p>
-							</div>
-						</div>
-						<div class="delete-btn">
-							<div><i class="fa-solid fa-trash"></i></div>
-						</div>
-					</li>
-				</ul>
+				<ul id="transaction-list"></ul>
 			</div>
 		</div>
 		<div id="income-contents">
@@ -175,27 +140,7 @@
 					<button id="inc-add">+ Add Income</button>
 				</div>
 				<div class="list">
-					<ul>
-						<li>
-							<div class="image"><i class="fa-solid fa-piggy-bank"></i></div>
-							<div class="data">
-								<div class="heading">
-									<div class="dot" style="background-color: #6bb023;"></div>
-									<p>Bitcoin</p>
-								</div>
-								<div class="info">
-									<p><i class="fa-solid fa-indian-rupee-sign"></i>1000</p>
-									<p><i class="fa-solid fa-calendar"></i>28/01/2024</p>
-								</div>
-								<div class="message">
-									<p><i class="fa-solid fa-comment"></i>This is a comment</p>
-								</div>
-							</div>
-							<div class="delete-btn">
-								<div><i class="fa-solid fa-trash"></i></div>
-							</div>
-						</li>
-					</ul>
+					<ul id="income-list"></ul>
 				</div>
 			</div>
 		</div>
@@ -214,7 +159,7 @@
 					<button id="exp-add">+ Add Expense</button>
 				</div>
 				<div class="list">
-					<ul>
+					<ul id="expense-list">
 						<li>
 							<div class="image"><i class="fa-solid fa-money-bill-wave"></i></div>
 							<div class="data">

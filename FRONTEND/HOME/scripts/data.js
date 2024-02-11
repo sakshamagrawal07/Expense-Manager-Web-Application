@@ -12,6 +12,8 @@ const expDate = document.querySelector("#exp-date")
 const expDescription = document.querySelector("#exp-description")
 const expAdd = document.querySelector("#exp-add")
 
+const deleteBtn = document.querySelectorAll(".delete-btn")
+
 const addTransaction = async (obj) => {
     try {
         await fetch(`${baseUrl}/add-transaction`, {
@@ -32,24 +34,86 @@ const addTransaction = async (obj) => {
     }
 }
 
-incAdd.addEventListener('click',()=>{
-    let incTransaction={
-        category : "income",
-        title : incTitle.value,
-        amount : incAmount.value,
-        description : incDescription.value,
-        date : incDate.value
+const readTransactions = async () => {
+    try {
+        const response = await fetch(`${baseUrl}/get-transactions`,
+            {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+            }
+        )
+        const dataArray = (await response.json()).transaction
+        console.log(dataArray)
+        
+        dataArray.forEach( data => {
+            if(data.category === 'income')
+            {
+                displayIncome(data)
+                displayTransactionIncome(data)
+            }
+            else
+            {
+                displayExpense(data)
+                displayTransactionExpense(data)
+            }
+        });
+    } catch (err) {
+        console.log("ERROR Reading the data", err);
+    }
+}
+
+const displayIncome = (obj)=>{
+    const li = document.createElement('li')
+    li.innerHTML = `<div class="image"><i class="fa-solid fa-piggy-bank"></i></div><div class="data"><div class="heading"><div class="dot" style="background-color: #6bb023;"></div><p>${obj.title}</p></div><div class="info"><p><i class="fa-solid fa-indian-rupee-sign"></i>${obj.amount}</p><p><i class="fa-solid fa-calendar"></i>${obj.date}</p></div><div class="message"><p><i class="fa-solid fa-comment"></i>${obj.description}</p></div></div><div class="delete-btn"><div><i class="fa-solid fa-trash"></i></div></div>`
+    const ul = document.querySelector('#income-list')
+    ul.appendChild(li)
+}
+
+const displayExpense = (obj)=>{
+    const li = document.createElement('li')
+    li.innerHTML = `<div class="image"><i class="fa-solid fa-money-bill-wave"></i></div><div class="data"><div class="heading"><div class="dot" style="background-color: #e0211f;"></div><p>${obj.title}</p></div><div class="info"><p><i class="fa-solid fa-indian-rupee-sign"></i>${obj.amount*-1}</p><p><i class="fa-solid fa-calendar"></i>${obj.date}</p></div><div class="message"><p><i class="fa-solid fa-comment"></i>${obj.description}</p></div></div><div class="delete-btn"><div><i class="fa-solid fa-trash"></i></div></div>`
+    const ul = document.querySelector('#expense-list')
+    ul.appendChild(li)
+}
+
+const displayTransactionIncome = (obj)=>{
+    const li = document.createElement('li')
+    li.innerHTML = `<div class="image"><i class="fa-solid fa-piggy-bank"></i></div><div class="data"><div class="heading"><div class="dot" style="background-color: #6bb023;"></div><p>${obj.title}</p></div><div class="info"><p><i class="fa-solid fa-indian-rupee-sign"></i>${obj.amount}</p><p><i class="fa-solid fa-calendar"></i>${obj.date}</p><p><i class="fa-solid fa-comment"></i>${obj.description}</p></div></div><div class="delete-btn"><div><i class="fa-solid fa-trash"></i></div></div>`
+    const ul = document.querySelector('#transaction-list')
+    ul.appendChild(li)
+}
+
+const displayTransactionExpense = (obj)=>{
+    const li = document.createElement('li')
+    li.innerHTML = `<div class="image"><i class="fa-solid fa-money-bill-wave"></i></div><div class="data"><div class="heading"><div class="dot" style="background-color: #e0211f;"></div><p>${obj.title}</p></div><div class="info"><p><i class="fa-solid fa-indian-rupee-sign"></i>${obj.amount*-1}</p><p><i class="fa-solid fa-calendar"></i>${obj.date}</p><p><i class="fa-solid fa-comment"></i>${obj.description}</p></div></div><div class="delete-btn"><div><i class="fa-solid fa-trash"></i></div></div>`
+    const ul = document.querySelector('#transaction-list')
+    ul.appendChild(li)
+}
+
+incAdd.addEventListener('click', () => {
+    let incTransaction = {
+        category: "income",
+        title: incTitle.value,
+        amount: incAmount.value,
+        description: incDescription.value,
+        date: incDate.value
     }
     addTransaction(incTransaction)
+    readTransactions()
 })
 
-expAdd.addEventListener('click',()=>{
-    let expTransaction={
-        category : "expense",
-        title : expTitle.value,
-        amount : expAmount.value*-1,
-        description : expDescription.value,
-        date : expDate.value
+expAdd.addEventListener('click', () => {
+    let expTransaction = {
+        category: "expense",
+        title: expTitle.value,
+        amount: expAmount.value * -1,
+        description: expDescription.value,
+        date: expDate.value
     }
     addTransaction(expTransaction)
+    readTransactions()
 })
+
+readTransactions()
