@@ -12,11 +12,22 @@ const expDate = document.querySelector("#exp-date")
 const expDescription = document.querySelector("#exp-description")
 const expAdd = document.querySelector("#exp-add")
 
+const recentHistory = document.querySelector("#recent-history")
+
 let deleteBtn = document.querySelectorAll(".delete-btn")
+
+let minInc = 0
+let maxInc = 0
+let minExp = 0
+let maxExp = 0
 
 let totalInc = 0
 let totalExp = 0
 let total = 0
+
+let inc = false
+let exp = false
+let recent=0
 
 const addTransaction = async (obj) => {
     try {
@@ -41,66 +52,96 @@ const addTransaction = async (obj) => {
 const readTransactions = async () => {
     try {
         const response = await fetch(`${baseUrl}/get-transactions`,
-        {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-        }
+            {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+            }
         )
-        const dataArray = (await response.json()).transaction
-        
+        const dataArray = (await response.json()).transaction.reverse()
+
         const incul = document.querySelector('#income-list')
         incul.innerHTML = ""
         const expul = document.querySelector('#expense-list')
         expul.innerHTML = ""
         const tranul = document.querySelector('#transaction-list')
         tranul.innerHTML = ""
-        totalInc=0
-        totalExp=0
+        totalInc = 0
+        totalExp = 0
         dataArray.forEach(data => {
             if (data.category === 'income') {
                 displayIncome(data)
                 displayTransactionIncome(data)
-                totalInc+=data.amount
+                totalInc += data.amount
+                if (!inc) {
+                    minInc = data.amount
+                    maxInc = data.amount
+                    inc = true
+                }
+                minInc = Math.min(minInc, data.amount)
+                maxInc = Math.max(maxInc, data.amount)
             }
             else {
                 displayExpense(data)
                 displayTransactionExpense(data)
-                totalExp+=data.amount*-1
+                totalExp += data.amount * -1
+                if (!exp) {
+                    minExp = data.amount*-1
+                    maxExp = data.amount*-1
+                    exp = true
+                }
+                minExp = Math.min(minExp, data.amount*-1)
+                maxExp = Math.max(maxExp, data.amount*-1)
+            }
+            if(recent<=2)
+            {
+                if(recent==0)recentHistory.innerHTML=""
+                displayRecent(data)
+                recent++
             }
         })
-        // console.log(totalInc)
-        total=totalInc-totalExp
-        updatTotalIncome()
-        updatTotalExpense()
+        total = totalInc - totalExp
+        recent=0
+        updateTotalIncome()
+        updateTotalExpense()
         updateTotal()
     } catch (err) {
         console.log("ERROR Reading the data", err);
     }
 }
 
-const updatTotalIncome = ()=>{
+const updateTotalIncome = () => {
     const span = document.querySelector("#income-total")
-    span.innerHTML=`<i class="fa-solid fa-indian-rupee-sign"></i>${totalInc}`
+    span.innerHTML = `<i class="fa-solid fa-indian-rupee-sign"></i>${totalInc}`
 
     const dashSpan = document.querySelector("#dashboard-total-income")
-    dashSpan.innerHTML=`<i class="fa-solid fa-indian-rupee-sign"></i>${totalInc}`
+    dashSpan.innerHTML = `<i class="fa-solid fa-indian-rupee-sign"></i>${totalInc}`
+
+    const minIncome = document.querySelector("#min-income")
+    const maxIncome = document.querySelector("#max-income")
+    minIncome.innerHTML = `<i class="fa-solid fa-indian-rupee-sign"></i>${minInc}`
+    maxIncome.innerHTML = `<i class="fa-solid fa-indian-rupee-sign"></i>${maxInc}`
 }
 
-const updatTotalExpense = ()=>{
+const updateTotalExpense = () => {
     const span = document.querySelector("#expense-total")
-    span.innerHTML=`<i class="fa-solid fa-indian-rupee-sign"></i>${totalExp}`
+    span.innerHTML = `<i class="fa-solid fa-indian-rupee-sign"></i>${totalExp}`
 
     const dashSpan = document.querySelector("#dashboard-total-expense")
-    dashSpan.innerHTML=`<i class="fa-solid fa-indian-rupee-sign"></i>${totalExp}`
+    dashSpan.innerHTML = `<i class="fa-solid fa-indian-rupee-sign"></i>${totalExp}`
+
+    const minExpense = document.querySelector("#min-expense")
+    const maxExpense = document.querySelector("#max-expense")
+    minExpense.innerHTML = `<i class="fa-solid fa-indian-rupee-sign"></i>${minExp}`
+    maxExpense.innerHTML = `<i class="fa-solid fa-indian-rupee-sign"></i>${maxExp}`
 }
 
-const updateTotal = ()=>{
+const updateTotal = () => {
     const dashSpan = document.querySelector("#dashboard-total")
-    dashSpan.innerHTML=`<i class="fa-solid fa-indian-rupee-sign"></i>${total}`
+    dashSpan.innerHTML = `<i class="fa-solid fa-indian-rupee-sign"></i>${total}`
 
-    if(total>=0)dashSpan.style.color = "#6bb023"
+    if (total >= 0) dashSpan.style.color = "#6bb023"
     else dashSpan.style.color = "#e0211f"
 }
 
@@ -111,6 +152,16 @@ const displayIncome = (obj) => {
     ul.appendChild(li)
 
     deleteBtn = document.querySelectorAll(".delete-btn")
+}
+
+const displayRecent = (obj)=>{
+    let color = "#6bb023"
+    if(obj.category === 'expense')
+    {
+        color = "#e0211f"
+        obj.amount *= -1
+    }
+    recentHistory.innerHTML+=`<div class="history-list"><p style="color:${color}">${obj.title}</p><p style="color:${color}"><i class="fa-solid fa-indian-rupee-sign"></i>${obj.amount}</p></div>`
 }
 
 const displayExpense = (obj) => {
@@ -140,7 +191,7 @@ const displayTransactionExpense = (obj) => {
     deleteBtn = document.querySelectorAll(".delete-btn")
 }
 
-incAdd.addEventListener('click', () => {
+incAdd.addEventListener('click', async() => {
     let incTransaction = {
         category: "income",
         title: incTitle.value,
@@ -148,11 +199,15 @@ incAdd.addEventListener('click', () => {
         description: incDescription.value,
         date: incDate.value
     }
-    addTransaction(incTransaction)
-    readTransactions()
+    await addTransaction(incTransaction)
+    await readTransactions()
+    incTitle.value = ""
+    incAmount.value = ""
+    incDescription.value = ""
+    incDate.value = ""
 })
 
-expAdd.addEventListener('click', () => {
+expAdd.addEventListener('click', async() => {
     let expTransaction = {
         category: "expense",
         title: expTitle.value,
@@ -160,8 +215,12 @@ expAdd.addEventListener('click', () => {
         description: expDescription.value,
         date: expDate.value
     }
-    addTransaction(expTransaction)
-    readTransactions()
+    await addTransaction(expTransaction)
+    await readTransactions()
+    expTitle.value = ""
+    expAmount.value = ""
+    expDescription.value = ""
+    expDate.value = ""
 })
 
 readTransactions()
