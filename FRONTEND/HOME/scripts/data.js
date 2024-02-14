@@ -15,6 +15,8 @@ const expAdd = document.querySelector("#exp-add")
 const recentHistory = document.querySelector("#recent-history")
 
 let deleteBtn = document.querySelectorAll(".delete-btn")
+let chartCreated = false
+let mychart = null
 
 let minInc = 0
 let maxInc = 0
@@ -27,7 +29,7 @@ let total = 0
 
 let inc = false
 let exp = false
-let recent=0
+let recent = 0
 
 const addTransaction = async (obj) => {
     try {
@@ -49,6 +51,26 @@ const addTransaction = async (obj) => {
     }
 }
 
+const removeTransaction = async (obj) => {
+    try {
+        await fetch(`${baseUrl}/remove-transaction`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                "category": obj.category,
+                "title": obj.title,
+                "amount": obj.amount,
+                "description": obj.description,
+                "date": obj.date
+            })
+        })
+    } catch (err) {
+        console.log("ERROR Deleting the data", err);
+    }
+}
+
 const readTransactions = async () => {
     try {
         const response = await fetch(`${baseUrl}/get-transactions`,
@@ -60,7 +82,8 @@ const readTransactions = async () => {
             }
         )
         const dataArray = (await response.json()).transaction.reverse()
-
+        Chartfun(dataArray)
+        chartCreated = true
         const incul = document.querySelector('#income-list')
         incul.innerHTML = ""
         const expul = document.querySelector('#expense-list')
@@ -87,22 +110,25 @@ const readTransactions = async () => {
                 displayTransactionExpense(data)
                 totalExp += data.amount * -1
                 if (!exp) {
-                    minExp = data.amount*-1
-                    maxExp = data.amount*-1
+                    minExp = data.amount * -1
+                    maxExp = data.amount * -1
                     exp = true
                 }
-                minExp = Math.min(minExp, data.amount*-1)
-                maxExp = Math.max(maxExp, data.amount*-1)
+                minExp = Math.min(minExp, data.amount * -1)
+                maxExp = Math.max(maxExp, data.amount * -1)
             }
-            if(recent<=2)
-            {
-                if(recent==0)recentHistory.innerHTML=""
+            if (recent <= 2) {
+                if (recent == 0) recentHistory.innerHTML = ""
                 displayRecent(data)
                 recent++
             }
         })
+
+        deleteBtn = document.querySelectorAll(".delete-btn")
+
         total = totalInc - totalExp
-        recent=0
+        recent = 0
+        deleteTransaction()
         updateTotalIncome()
         updateTotalExpense()
         updateTotal()
@@ -147,51 +173,42 @@ const updateTotal = () => {
 
 const displayIncome = (obj) => {
     const li = document.createElement('li')
-    li.innerHTML = `<div class="image"><i class="fa-solid fa-piggy-bank"></i></div><div class="data"><div class="heading"><div class="dot" style="background-color: #6bb023;"></div><p>${obj.title}</p></div><div class="info"><p><i class="fa-solid fa-indian-rupee-sign"></i>${obj.amount}</p><p><i class="fa-solid fa-calendar"></i>${obj.date}</p></div><div class="message"><p><i class="fa-solid fa-comment"></i>${obj.description}</p></div></div><div class="delete-btn"><div><i class="fa-solid fa-trash"></i></div></div>`
+    li.innerHTML = `<div class="image"><i class="fa-solid fa-piggy-bank"></i></div><div class="data"><div class="heading"><div class="dot" style="background-color: #6bb023;"></div><p>${obj.title}</p></div><div class="info"><p><i class="fa-solid fa-indian-rupee-sign"></i>${obj.amount}</p><p><i class="fa-solid fa-calendar"></i>${obj.date}</p></div><div class="message"><p><i class="fa-solid fa-comment"></i>${obj.description}</p></div></div><div class="delete-btn" data-id="${obj._id}"><div><i class="fa-solid fa-trash"></i></div></div>`
     const ul = document.querySelector('#income-list')
     ul.appendChild(li)
-
-    deleteBtn = document.querySelectorAll(".delete-btn")
 }
 
-const displayRecent = (obj)=>{
+const displayRecent = (obj) => {
     let color = "#6bb023"
-    if(obj.category === 'expense')
-    {
+    if (obj.category === 'expense') {
         color = "#e0211f"
         obj.amount *= -1
     }
-    recentHistory.innerHTML+=`<div class="history-list"><p style="color:${color}">${obj.title}</p><p style="color:${color}"><i class="fa-solid fa-indian-rupee-sign"></i>${obj.amount}</p></div>`
+    recentHistory.innerHTML += `<div class="history-list"><p style="color:${color}">${obj.title}</p><p style="color:${color}"><i class="fa-solid fa-indian-rupee-sign"></i>${obj.amount}</p></div>`
 }
 
 const displayExpense = (obj) => {
     const li = document.createElement('li')
-    li.innerHTML = `<div class="image"><i class="fa-solid fa-money-bill-wave"></i></div><div class="data"><div class="heading"><div class="dot" style="background-color: #e0211f;"></div><p>${obj.title}</p></div><div class="info"><p><i class="fa-solid fa-indian-rupee-sign"></i>${obj.amount * -1}</p><p><i class="fa-solid fa-calendar"></i>${obj.date}</p></div><div class="message"><p><i class="fa-solid fa-comment"></i>${obj.description}</p></div></div><div class="delete-btn"><div><i class="fa-solid fa-trash"></i></div></div>`
+    li.innerHTML = `<div class="image"><i class="fa-solid fa-money-bill-wave"></i></div><div class="data"><div class="heading"><div class="dot" style="background-color: #e0211f;"></div><p>${obj.title}</p></div><div class="info"><p><i class="fa-solid fa-indian-rupee-sign"></i>${obj.amount * -1}</p><p><i class="fa-solid fa-calendar"></i>${obj.date}</p></div><div class="message"><p><i class="fa-solid fa-comment"></i>${obj.description}</p></div></div><div class="delete-btn" data-id="${obj._id}"><div><i class="fa-solid fa-trash"></i></div></div>`
     const ul = document.querySelector('#expense-list')
     ul.appendChild(li)
-
-    deleteBtn = document.querySelectorAll(".delete-btn")
 }
 
 const displayTransactionIncome = (obj) => {
     const li = document.createElement('li')
-    li.innerHTML = `<div class="image"><i class="fa-solid fa-piggy-bank"></i></div><div class="data"><div class="heading"><div class="dot" style="background-color: #6bb023;"></div><p>${obj.title}</p></div><div class="info"><p><i class="fa-solid fa-indian-rupee-sign"></i>${obj.amount}</p><p><i class="fa-solid fa-calendar"></i>${obj.date}</p><p><i class="fa-solid fa-comment"></i>${obj.description}</p></div></div><div class="delete-btn"><div><i class="fa-solid fa-trash"></i></div></div>`
+    li.innerHTML = `<div class="image"><i class="fa-solid fa-piggy-bank"></i></div><div class="data"><div class="heading"><div class="dot" style="background-color: #6bb023;"></div><p>${obj.title}</p></div><div class="info"><p><i class="fa-solid fa-indian-rupee-sign"></i>${obj.amount}</p><p><i class="fa-solid fa-calendar"></i>${obj.date}</p><p><i class="fa-solid fa-comment"></i>${obj.description}</p></div></div><div class="delete-btn" data-id="${obj._id}"><div><i class="fa-solid fa-trash"></i></div></div>`
     const ul = document.querySelector('#transaction-list')
     ul.appendChild(li)
-
-    deleteBtn = document.querySelectorAll(".delete-btn")
 }
 
 const displayTransactionExpense = (obj) => {
     const li = document.createElement('li')
-    li.innerHTML = `<div class="image"><i class="fa-solid fa-money-bill-wave"></i></div><div class="data"><div class="heading"><div class="dot" style="background-color: #e0211f;"></div><p>${obj.title}</p></div><div class="info"><p><i class="fa-solid fa-indian-rupee-sign"></i>${obj.amount * -1}</p><p><i class="fa-solid fa-calendar"></i>${obj.date}</p><p><i class="fa-solid fa-comment"></i>${obj.description}</p></div></div><div class="delete-btn"><div><i class="fa-solid fa-trash"></i></div></div>`
+    li.innerHTML = `<div class="image"><i class="fa-solid fa-money-bill-wave"></i></div><div class="data"><div class="heading"><div class="dot" style="background-color: #e0211f;"></div><p>${obj.title}</p></div><div class="info"><p><i class="fa-solid fa-indian-rupee-sign"></i>${obj.amount * -1}</p><p><i class="fa-solid fa-calendar"></i>${obj.date}</p><p><i class="fa-solid fa-comment"></i>${obj.description}</p></div></div><div class="delete-btn" data-id="${obj._id}"><div><i class="fa-solid fa-trash"></i></div></div>`
     const ul = document.querySelector('#transaction-list')
     ul.appendChild(li)
-
-    deleteBtn = document.querySelectorAll(".delete-btn")
 }
 
-incAdd.addEventListener('click', async() => {
+incAdd.addEventListener('click', async () => {
     let incTransaction = {
         category: "income",
         title: incTitle.value,
@@ -207,7 +224,7 @@ incAdd.addEventListener('click', async() => {
     incDate.value = ""
 })
 
-expAdd.addEventListener('click', async() => {
+expAdd.addEventListener('click', async () => {
     let expTransaction = {
         category: "expense",
         title: expTitle.value,
@@ -223,4 +240,59 @@ expAdd.addEventListener('click', async() => {
     expDate.value = ""
 })
 
-readTransactions()
+const deleteTransaction = () => {
+    // console.log(deleteBtn)
+    deleteBtn.forEach(btn => {
+        // console.log(btn)
+        btn.addEventListener('click', () => {
+            console.log(btn.dataset.id)
+        })
+    })
+}
+
+const Chartfun = (arr)=>{
+    const incomeData = arr.map(d=>{
+        if(d.amount>=0)
+            return d
+    }).reverse()
+    const expenseData = arr.map((d)=>{
+        if(d.amount<0)
+            return d
+    }).reverse()
+    const date = arr.map(d=>d.date).reverse()
+    const ctx = document.querySelector('#inc-exp-chart')
+    if(chartCreated === true)mychart.destroy()
+    chartCreated = false;
+    mychart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: date,
+            datasets: [{
+                label: 'Income',
+                data: arr.map(d =>({
+                    x:d.date,
+                    y:d.amount
+                })),
+                borderWidth: 2,
+                lineTension : 0,
+                backgroundColor : 'green',
+            },
+            // {
+            //         label: 'Expense',
+            //         data: [2, 9, 13, 15, 25, 23, 0.5, 9, 4, 3, 10, 22, 19, 1],
+            //         borderWidth: 2,
+            //         lineTension : 0,
+            //         backgroundColor : '#af2021',
+            //     }
+            ]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            },
+        },
+    })}
+
+    readTransactions()

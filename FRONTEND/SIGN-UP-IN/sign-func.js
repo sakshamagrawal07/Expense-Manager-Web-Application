@@ -1,22 +1,36 @@
-const upCoverButton=document.querySelector('#sign-up');
-const inCoverButton=document.querySelector('#sign-in');
-const upCover=document.querySelector('#up-cover');
-const inCover=document.querySelector('#in-cover');
-const upInput=document.querySelector('#up-input');
-const inInput=document.querySelector('#in-input');
+const signUpBtn=document.querySelector('#sign-up-btn');
+const signInBtn=document.querySelector('#sign-in-btn');
+const signUpContent=document.querySelector('#sign-up-contents');
+const signInContent=document.querySelector('#sign-in-contents');
 
-upCoverButton.addEventListener('click',
-    function(){
-        inInput.style.display="none";
-        inCover.style.display="flex";
-        upCover.style.display="none";
-        upInput.style.display="flex";
+signInBtn.addEventListener('click',()=>{
+    signInContent.style.display = "flex"
+    signUpContent.style.display = "none"
 })
 
-inCoverButton.addEventListener('click',
-    function(){
-        inInput.style.display="flex";
-        inCover.style.display="none";
-        upCover.style.display="flex";
-        upInput.style.display="none";
+signUpBtn.addEventListener('click',()=>{
+    signUpContent.style.display = "flex"
+    signInContent.style.display = "none"
 })
+
+async function fun(){
+    const obj={
+        "username":"Hello007",
+        "password": "123456",
+        "email": "Hello@gmail.com",
+        "name": "Hello World"
+    }
+
+    let response=await fetch("http://localhost:8000/add-user",{
+        method:"POST",
+        headers:{
+            "Content-type":"Application/json",
+            "Developer":"Saksham Agrawal"
+        },
+        body:JSON.stringify(obj)
+    })
+
+    let data=await response.json()
+
+    console.log(data)
+}
