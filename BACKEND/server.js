@@ -1,19 +1,47 @@
 const express = require("express")
 const bodyParser = require("body-parser")
 const cors = require("cors")
-const db = require('./database/db')
+const db1 = require('./database/db1')
+const db2 = require('./database/db2')
 const Transactions = require('./models/transactions')
+const Users = require('./models/user')
 
-db()
+db1()
+db2()
 const app = express()
 
 
 app.use(bodyParser.json())
 app.use(cors())
 
+app.post("/add-user", async (req, res) => {
+    try {
+        const user = await Users.create({
+            "name": req.body.name,
+            "email": req.body.email,
+            "username": req.body.username,
+            "password": req.body.password,
+        })
+        res.status(200).json({ "msg": "user added" })
+    } catch (err) {
+        console.error("Error:", err);
+        res.status(500).json({ "error": "Internal Server Error" });
+    }
+})
+
+app.post("/get-user", async (req, res) => {
+    try {
+        const user = await Users.find()
+        res.status(200).json({ user })
+    } catch (err) {
+        console.error("Error:", err);
+        res.status(500).json({ "error": "Internal Server Error" });
+    }
+})
+
 app.post("/add-transaction", async (req, res) => {
     try {
-        let transaction = await Transactions.create({
+        const transaction = await Transactions.create({
             "category": req.body.category,
             "amount": req.body.amount,
             "description": req.body.description,
@@ -22,7 +50,7 @@ app.post("/add-transaction", async (req, res) => {
         })
         res.status(200).json({ "msg": "transaction added" })
     } catch (err) {
-        console.error("Error:", error);
+        console.error("Error:", err);
         res.status(500).json({ "error": "Internal Server Error" });
     }
 })
@@ -57,11 +85,13 @@ app.post("/get-transactions", async (req, res) => {
 app.post("/remove-transaction", async (req, res) => {
     try {
         const transaction = await Transactions.findOneAndDelete({
-            "category": req.body.category,
-            "amount": req.body.amount,
-            "description": req.body.description,
-            "date": req.body.data,
-            "title": req.body.title
+            // "category": req.body.category,
+            // "amount": req.body.amount,
+            // "description": req.body.description,
+            // "date": req.body.data,
+            // "title": req.body.title
+
+            "_id": req.body._id,
         });
         res.status(200).json({ "msg": "Deleted", transaction });
     } catch (error) {
