@@ -14,6 +14,8 @@ const expAdd = document.querySelector("#exp-add")
 
 const recentHistory = document.querySelector("#recent-history")
 
+const username = sessionStorage.getItem("username")
+
 let deleteBtn = document.querySelectorAll(".delete-btn")
 let chartCreated = false
 let mychart = null
@@ -31,6 +33,12 @@ let inc = false
 let exp = false
 let recent = 0
 
+window.onload = () => {
+    if (username === null) {
+        window.location.href = "http://127.0.0.1:3000/FRONTEND/SIGN-UP-IN/sign.html"
+    }
+}
+
 const addTransaction = async (obj) => {
     try {
         await fetch(`${baseUrl}/add-transaction`, {
@@ -38,33 +46,20 @@ const addTransaction = async (obj) => {
             headers: {
                 "Content-Type": "application/json",
             },
-            body: JSON.stringify({
-                "category": obj.category,
-                "title": obj.title,
-                "amount": obj.amount,
-                "description": obj.description,
-                "date": obj.date
-            })
+            body: JSON.stringify(obj)
         })
     } catch (err) {
         console.log("ERROR Stroing the data", err);
     }
 }
 
-const removeTransaction = async (obj) => {
+const removeTransaction = async (_id) => {
     try {
-        await fetch(`${baseUrl}/remove-transaction`, {
+        await fetch(`${baseUrl}/remove-transaction/${_id}`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
             },
-            body: JSON.stringify({
-                "category": obj.category,
-                "title": obj.title,
-                "amount": obj.amount,
-                "description": obj.description,
-                "date": obj.date
-            })
         })
     } catch (err) {
         console.log("ERROR Deleting the data", err);
@@ -210,11 +205,12 @@ const displayTransactionExpense = (obj) => {
 
 incAdd.addEventListener('click', async () => {
     let incTransaction = {
-        category: "income",
-        title: incTitle.value,
-        amount: incAmount.value,
-        description: incDescription.value,
-        date: incDate.value
+        "category": "income",
+        "title": incTitle.value,
+        "amount": incAmount.value,
+        "description": incDescription.value,
+        "date": incDate.value,
+        "username": username,
     }
     await addTransaction(incTransaction)
     await readTransactions()
@@ -226,11 +222,12 @@ incAdd.addEventListener('click', async () => {
 
 expAdd.addEventListener('click', async () => {
     let expTransaction = {
-        category: "expense",
-        title: expTitle.value,
-        amount: expAmount.value * -1,
-        description: expDescription.value,
-        date: expDate.value
+        "category": "expense",
+        "title": expTitle.value,
+        "amount": expAmount.value * -1,
+        "description": expDescription.value,
+        "date": expDate.value,
+        "username": username,
     }
     await addTransaction(expTransaction)
     await readTransactions()
@@ -241,27 +238,28 @@ expAdd.addEventListener('click', async () => {
 })
 
 const deleteTransaction = () => {
-    // console.log(deleteBtn)
     deleteBtn.forEach(btn => {
-        // console.log(btn)
-        btn.addEventListener('click', () => {
-            console.log(btn.dataset.id)
+        btn.addEventListener('click', async () => {
+            await removeTransaction(btn.dataset.id)
+            await readTransactions()
         })
     })
 }
 
-const Chartfun = (arr)=>{
-    const incomeData = arr.map(d=>{
-        if(d.amount>=0)
-            return d
-    }).reverse()
-    const expenseData = arr.map((d)=>{
-        if(d.amount<0)
-            return d
-    }).reverse()
-    const date = arr.map(d=>d.date).reverse()
+const Chartfun = (arr) => {
+    let incomeData = []
+    let expenseData = []
+    arr.reverse().forEach(obj => {
+        if (obj.amount < 0) {
+            expenseData.push(obj)
+        }
+        else {
+            incomeData.push(obj)
+        }
+    })
+    const date = arr.map(d => d.date).reverse()
     const ctx = document.querySelector('#inc-exp-chart')
-    if(chartCreated === true)mychart.destroy()
+    if (chartCreated === true) mychart.destroy()
     chartCreated = false;
     mychart = new Chart(ctx, {
         type: 'line',
@@ -269,21 +267,24 @@ const Chartfun = (arr)=>{
             labels: date,
             datasets: [{
                 label: 'Income',
-                data: arr.map(d =>({
-                    x:d.date,
-                    y:d.amount
+                data: incomeData.map(d => ({
+                    x: d.date,
+                    y: d.amount
                 })),
                 borderWidth: 2,
-                lineTension : 0,
-                backgroundColor : 'green',
+                lineTension: 0,
+                backgroundColor: 'green',
             },
-            // {
-            //         label: 'Expense',
-            //         data: [2, 9, 13, 15, 25, 23, 0.5, 9, 4, 3, 10, 22, 19, 1],
-            //         borderWidth: 2,
-            //         lineTension : 0,
-            //         backgroundColor : '#af2021',
-            //     }
+            {
+                label: 'Expense',
+                data: expenseData.map(d => ({
+                    x: d.date,
+                    y: d.amount
+                })),
+                borderWidth: 2,
+                lineTension: 0,
+                backgroundColor: '#af2021',
+            }
             ]
         },
         options: {
@@ -293,6 +294,7 @@ const Chartfun = (arr)=>{
                 }
             },
         },
-    })}
+    })
+}
 
-    readTransactions()
+readTransactions()

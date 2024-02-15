@@ -20,6 +20,10 @@ const TransactionSchema = new mongoose.Schema({
     title : {
         type : String,
         require : true
+    },
+    username :{
+        type : String,
+        require : true
     }
 })
 

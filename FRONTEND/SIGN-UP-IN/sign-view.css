@@ -51,6 +51,7 @@ button {
 	outline: none;
 	background-color: #E1F0DA;
 	transition: 0.2s;
+	cursor: pointer;
 }
 
 button:first-child{
@@ -126,6 +127,12 @@ input[type=submit]{
 	font-size: large;
 	font-weight: 700;
 	border-radius: 80px;
+	cursor: pointer;
+	transition: 0.2s;
+}
+
+input[type=submit]:hover{
+	background-color: #dc9eae;
 }
 
 label {
