@@ -1,3 +1,5 @@
+const baseURL = "http://localhost:8000"
+
 const signUpBtn = document.querySelector('#sign-up-btn');
 const signInBtn = document.querySelector('#sign-in-btn');
 const signUpContent = document.querySelector('#sign-up-contents');
@@ -13,8 +15,6 @@ const upEmail = document.querySelector("#up-email")
 const upUsername = document.querySelector("#up-username")
 const upPassword = document.querySelector("#up-password")
 
-const baseURL = "http://localhost:8000"
-
 signInBtn.addEventListener('click', () => {
     signInContent.style.display = "flex"
     signUpContent.style.display = "none"
@@ -25,7 +25,7 @@ signUpBtn.addEventListener('click', () => {
     signInContent.style.display = "none"
 })
 
-const addUser = async (obj) => {
+const signUp = async (obj) => {
     const response = await fetch(`${baseURL}/add-user`, {
         method: "POST",
         headers: {
@@ -34,27 +34,66 @@ const addUser = async (obj) => {
         body: JSON.stringify(obj)
     })
 
-    let data = await response.json()
+    const data = await response.json()
 
-    if(response.status === 401 || response.status === 402){
+    if (response.status === 401 || response.status === 402) {
         alert(data.error)
     }
-    else{
+    else {
         sessionStorage.setItem("username", obj.username)
         window.location.href = "http://127.0.0.1:3000/FRONTEND/HOME/home.html"
     }
     console.log(data)
 }
 
-submitUp.addEventListener('click',async(e)=>{
+const signIn = async (username, password) => {
+    const response = await fetch(`${baseURL}/get-user/${username}`, {
+        method: "POST",
+        headers: {
+            "Content-type": "Application/json",
+        },
+    })
+
+    const data = await response.json()
+
+    if (data === null) {
+        alert(`Username "${username}" does not exists`)
+    }
+    else if (data.password === password) {
+        sessionStorage.setItem("username", username)
+        window.location.href = "http://127.0.0.1:3000/FRONTEND/HOME/home.html"
+    }
+    else {
+        alert("Wrong password")
+    }
+    console.log(data)
+}
+
+submitUp.addEventListener('click', async (e) => {
 
     e.preventDefault()
 
-    const user = {
-        "name": upName.value,
-        "email": upEmail.value,
-        "username": upUsername.value,
-        "password": upPassword.value,
+    if (upName.value !== '' && upEmail.value !== '' && upUsername.value !== '' && upPassword.value !== '') {
+        const user = {
+            "name": upName.value,
+            "email": upEmail.value,
+            "username": upUsername.value,
+            "password": upPassword.value,
+        }
+        await signUp(user)
     }
-    await addUser(user)
+    else{
+        alert("Input Fields should not be empty!!")
+    }
+})
+
+submitIn.addEventListener('click', async (e) => {
+
+    e.preventDefault()
+    if (inUsername.value !== '' && inPassword !== '') {
+        await signIn(inUsername.value, inPassword.value)
+    }
+    else {
+        alert("Input Fields should not be empty!!")
+    }
 })

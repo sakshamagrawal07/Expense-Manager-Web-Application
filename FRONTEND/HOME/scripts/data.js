@@ -68,7 +68,7 @@ const removeTransaction = async (_id) => {
 
 const readTransactions = async () => {
     try {
-        const response = await fetch(`${baseUrl}/get-transactions`,
+        const response = await fetch(`${baseUrl}/get-transactions/${username}`,
             {
                 method: "POST",
                 headers: {
@@ -76,7 +76,7 @@ const readTransactions = async () => {
                 },
             }
         )
-        const dataArray = (await response.json()).transaction.reverse()
+        const dataArray = (await response.json()).transaction
         Chartfun(dataArray)
         chartCreated = true
         const incul = document.querySelector('#income-list')
@@ -249,7 +249,7 @@ const deleteTransaction = () => {
 const Chartfun = (arr) => {
     let incomeData = []
     let expenseData = []
-    arr.reverse().forEach(obj => {
+    arr.forEach(obj => {
         if (obj.amount < 0) {
             expenseData.push(obj)
         }
@@ -257,7 +257,7 @@ const Chartfun = (arr) => {
             incomeData.push(obj)
         }
     })
-    const date = arr.map(d => d.date).reverse()
+    const date = arr.map(d => d.date)
     const ctx = document.querySelector('#inc-exp-chart')
     if (chartCreated === true) mychart.destroy()
     chartCreated = false;

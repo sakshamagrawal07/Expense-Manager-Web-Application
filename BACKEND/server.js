@@ -41,10 +41,11 @@ app.post("/add-user", async (req, res) => {
     }
 })
 
-app.post("/get-user", async (req, res) => {
+app.post("/get-user/:username", async (req, res) => {
     try {
-        const user = await Users.find()
-        res.status(200).json({ user })
+        const user = await Users.findOne({username : req.params.username})
+        res.status(200).json(user)
+        console.log(user)
     } catch (err) {
         console.error("Error:", err);
         res.status(500).json({ "error": "Internal Server Error" });
@@ -68,12 +69,12 @@ app.post("/add-transaction", async (req, res) => {
     }
 })
 
-app.post("/get-transactions", async (req, res) => {
+app.post("/get-transactions/:username", async (req, res) => {
     try {
-        const transaction = await Transactions.find()
+        const transaction = await Transactions.find({username : req.params.username})
         res.status(200).json({ transaction })
     } catch (err) {
-        console.error("Error:", error);
+        console.error("Error:", err);
         res.status(500).json({ "error": "Internal Server Error" });
     }
 })
