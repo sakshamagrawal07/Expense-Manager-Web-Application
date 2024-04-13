@@ -1,12 +1,15 @@
 :root{
-    --list-background : #E1F0DA;
-    --highlight-text : #818189;
-	--placeholder-color : #0F2167;
-    --border-color : #fff;
-    --add-btn : #E6A4B4;
+    --list-background : #dbdbdb;
+    --income-list-bg : linear-gradient(-150deg,#198642,#49dc7f);
+    --expense-list-bg : linear-gradient(-150deg,#a0184f,#d82675);
+    --investment-list-bg : linear-gradient(-150deg,#2153da,#5da1f8);
+    --highlight-text : #000;
+	--placeholder-color : #000000;
+    --border-color : #e5e7eb;
+    --add-btn : #ec4899;
 }
 
-#income-contents,#expense-contents{
+#income-contents,#expense-contents,#investment-contents{
     display: flex;
     flex-direction: column;
     height: 100%;
@@ -26,6 +29,7 @@
     margin: 15px 0;
     padding: 15px 0;
     border-radius: 15px;
+    color: #000;
 }
 
 .total > h2 > span > i{
@@ -40,18 +44,20 @@
 }
 
 .input>input , textarea{
-    background: none;
-    border: 2px solid var(--border-color);
-    border-radius: 3px;
+    border: 1px solid var(--border-color);
     outline: none;
-    padding: 10px;
     margin-bottom: 15px;
+    padding: 10px;
     font-size: 15px;
+    border-radius: 5px;
+    background-color: #dbdbdb;
+    color: #000;
 }
 
 .input>input::placeholder,
 .input>textarea::placeholder{
     color: var(--placeholder-color);
+    
 }
 
 textarea{
@@ -65,16 +71,16 @@ textarea{
     border: none;
     outline: none;
     padding: 10px;
-    width: 40%;
-    border-radius: 80px;
+    width: 100%;
+    border-radius: 5px;
     font-size: 15px;
     font-weight: 700;
-    transition: 0.3s;
+    transition: 0.2s;
     cursor: pointer;
 }
 
 .input > button:hover{
-    background-color: #99BC85;
+    background-color: #db2777;
 }
 
 .list{
@@ -91,20 +97,29 @@ textarea{
 }
 
 .list > ul >li{
-    width: 95%;
-    height: 100px;
+    width: 99%;
+    height: 120px;
     margin-bottom: 15px;
-    background-color: var(--list-background);
     border-radius: 15px;
-    border: 2px solid var(--border-color);
     padding: 15px;
     display: flex;
     align-items: center;
 }
 
+#income-list > li{
+    background: var(--income-list-bg);
+}
+
+#expense-list > li{
+    background: var(--expense-list-bg);
+}
+
+#investment-list >li{
+    background: var(--investment-list-bg);
+}
+
 .image{
-    background-color: var(--list-background);
-    border: 2px solid var(--border-color);
+    background-color: none;
     border-radius: 15px;
     height: 90px;
     width: 12%;
@@ -128,16 +143,17 @@ textarea{
     align-items: center;
 }
 
-.dot{
+/* .dot{
     width: 15px;
     height: 15px;
     border-radius: 50%;
     margin-right: 20px;
-}
+} */
 
 .heading > p{
     text-align: center;
     font-weight: 800;
+    letter-spacing: 1px;
 }
 
 .info{
@@ -172,7 +188,7 @@ textarea{
     align-items: center;
     aspect-ratio: 1/1;
     width: 70%;
-    background-color: #0F2167;
+    background-color: none;
     border-radius: 50%;
     font-size: 20px;
     color: #fff;
@@ -181,5 +197,5 @@ textarea{
 }
 
 .delete-btn > div:hover{
-    background-color: rgba(15, 33, 103, 0.922);
+    background-color: rgba(255, 255, 255, 0.233);
 }

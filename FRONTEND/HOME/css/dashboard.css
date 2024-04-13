@@ -1,6 +1,6 @@
 :root{
-    --list-background : #E1F0DA;
-    --highlight-text : #818189;
+    --list-background : #dbdbdb;
+    --highlight-text : #000;
     --border-color : #fff;
 }
 
@@ -8,8 +8,6 @@
     display: flex;
     flex-direction: column;
     height: 100%;
-    /* color: #281d60;
-    color: #37306B; */
     padding: 15px;
     background: transparent;
 }
@@ -28,13 +26,14 @@
 }
 
 .chart{
-    width: 95%;
-    height: 55%;
-    margin-top: 10px;
-    background-color: var(--list-background);
-    border: 2px solid var(--border-color);
+    width: 100%;
+    height: 60%;
+    /* margin-top: 10px; */
+    /* background-color: var(--list-background); */
+    background: none;
+    /* border: 2px solid var(--border-color); */
     border-radius: 15px;
-    padding: 0 20px;
+    /* padding: 0 20px; */
 }
 
 .totals{
@@ -43,6 +42,7 @@
     justify-content:center;
     align-items: center;
     padding-top: 15px;
+    color: black;
 }
 
 .income-expense{
@@ -54,7 +54,7 @@
 }
 
 .income-expense > div, .totals > .balance{
-    height: 5rem;
+    height: 7.5rem;
     width: 40%;
     padding: 15px;
     overflow: hidden;
@@ -96,15 +96,17 @@
     justify-content: space-between;
     align-items: center;
     background-color: var(--list-background);
-    border: 2px solid var(--border-color);
     border-radius: 14px;
-    height: 2rem;
+    height: 3.5rem;
     padding: 10px;
     margin-block: 10px;
 }
 
 .history-list > p{
     font-size: 17px;
+    i{
+        margin-right: 3px;
+    }
 }
 
 .min-max{
@@ -119,18 +121,27 @@
 .min-max-list >p {
     font-size: larger;
     color: var(--highlight-text);
+    i{
+        margin-right: 3px;
+    }
 }
 
 #transactions-contents{
     padding-block: 15px;
+    flex-direction: column;
 
+    h1{
+        margin-left: 20px;
+        margin-bottom: 10px;
+    }
     .list{
         width: 100%;
         height: 625px;
     }
     .list > ul > li{
-        height: 50px;
-
+        height: 100px;
+        width: 95%;
+        
         .image{
             height: 50px;
             width: 5%;
@@ -149,3 +160,16 @@
         }
     }
 }
+
+.list > ul > .income-transaction{
+    background: var(--income-list-bg);
+}
+
+.list > ul > .expense-transaction{
+    background: var(--expense-list-bg);
+}
+
+.list > ul > .investment-transaction{
+    background: var(--investment-list-bg);
+}
+

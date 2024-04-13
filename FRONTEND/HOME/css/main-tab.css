@@ -1,0 +1,139 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito&display=swap');
+
+*{
+	margin: 0;
+	padding: 0;
+	font-family: 'Nunito', sans-serif;
+    box-sizing: border-box;
+}
+
+body{
+	height: 100vh;
+	color: white;
+	display: flex;
+	align-items: center;
+	/* justify-content: space-between; */
+	/* overflow: hidden; */
+	/* contain: content; */
+
+    background:
+    radial-gradient(circle farthest-side at 0% 50%,#000000 23.5%,#0000 0)18.9px 27px,
+    radial-gradient(circle farthest-side at 0% 50%,rgba(255, 255, 255, 0.15) 24%,#0000 0)17.1px 27px,
+    linear-gradient(#000000 14%,#0000 0, #0000 85%,#000000 0)0 0,
+    linear-gradient(150deg,#000000 24%,rgba(255, 255, 255, 0.15) 0,rgba(255, 255, 255, 0.15) 26%,#0000 0,#0000 74%,rgba(255, 255, 255, 0.15) 0,rgba(255, 255, 255, 0.15) 76%,#000000 0)0 0,
+    linear-gradient(30deg,#000000 24%,rgba(255, 255, 255, 0.15) 0,rgba(255, 255, 255, 0.15) 26%,#0000 0,#0000 74%,rgba(255, 255, 255, 0.15) 0,rgba(255, 255, 255, 0.15) 76%,#000000 0)0 0,
+    linear-gradient(90deg,rgba(255, 255, 255, 0.15) 2%,#000000 0,#000000 98%,rgba(255, 255, 255, 0.15) 0%)0 0 #000000;
+    background-size: 36px 54px;
+    background-color: #000000;
+    
+    box-shadow: inset 0.5em 0.5em 32em 3em #000000;
+	/* background: rgb(2,0,36);
+	background: linear-gradient(194deg, rgba(2,0,36,1) 0%, rgba(9,9,121,1) 99%, rgba(0,212,255,1) 100%); */
+}
+
+.tabs{
+    background-color: #dbdbdb;
+	border-radius: 0px 30px 30px 0px;
+	border: none;
+	display: flex;
+	flex-direction: column;
+	flex-wrap: wrap;
+	padding: 20px 15px;
+	height: 100%;
+	width: 15%;
+    color: #000000;
+    margin-right: 50px;
+}
+
+.profile{
+    height: 60px;
+	width: 100%;
+	margin: 30px 0 20px 0;
+	display: flex;
+	align-items: center;
+}
+
+.profile-img{
+    aspect-ratio: 1/1;
+	width: 50px;
+	background-color: #ffffff;
+	border: 1px solid black;
+	border-radius: 50%;
+	display: flex;
+	justify-content: center;
+	align-items: flex-end;
+	overflow: hidden;
+    box-shadow: inset 0.5px 0.5px 5px 1px #000000;
+
+	i{
+        font-size: 40px;
+	}
+}
+
+.username{
+	margin-left: 7px;
+
+	p{
+		margin-top: -8px;
+		font-size: 15px;
+		font-weight: 700;
+        color: rgb(107 114 128);
+	}
+}
+
+.icon-text{
+	height: 30px;
+	display: flex;
+	align-items: center;
+	text-align: center;
+}
+
+.icon{
+	margin-right: 0.5rem;
+}
+
+.tabs > button{
+    border-radius: 5px;
+}
+
+button:active{
+	background-color: #000000;
+	color: #fff;
+	border-radius: 5px;
+}
+
+.tabs > button:last-child{
+	margin-top: auto;
+}
+
+.navigation{
+	cursor: pointer;
+	display: inline-block;
+	background: none;
+	text-align: center;
+	border: none;
+	font-weight: 700;
+	letter-spacing: 1px;
+	padding: 0.15rem 1rem;
+	font-size: 15px;
+	width: 100%;
+	color: #000;
+	text-align: start;
+}
+
+#dashboard{
+	background-color: #000;
+	color: #fff;
+}
+
+.contents{
+	border-radius: 10px;
+	border: none;
+	height: 95vh;
+	width: 80%;
+	overflow: hidden;
+}
+
+.contents > div{
+	display: none;
+}
