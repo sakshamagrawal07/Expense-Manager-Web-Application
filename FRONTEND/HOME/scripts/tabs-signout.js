@@ -36,7 +36,8 @@ signOutBtn.addEventListener('click', () => {
     window.location.replace(location.href)
 })
 
-window.onload = ()=>{
+window.onload = async()=>{
+    
     for(let x=1;x<noOfTabs-1;x++)
     {
         tabs[x].style.display = "none"
