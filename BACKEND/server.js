@@ -1,17 +1,17 @@
-const PORT = 8000
 const express = require("express")
 const bodyParser = require("body-parser")
 const cors = require("cors")
 const db1 = require('./database/db1')
-const db2 = require('./database/db2')
 const Transactions = require('./models/transactions')
 const Users = require('./models/user')
 const mongo = require('mongodb')
 
+require("dotenv").config()
+
 db1()
-db2()
 const app = express()
 
+var visits = 0
 
 app.use(bodyParser.json())
 app.use(cors())
@@ -26,15 +26,15 @@ app.post("/add-user", async (req, res) => {
         })
         res.status(200).json({ "msg": "user added" })
     } catch (err) {
-        if(err.code === 11000 && err.keyPattern.email === 1){
+        if (err.code === 11000 && err.keyPattern.email === 1) {
             console.log("Email already exists")
-            res.status(401).json({"error": "Email already exists"})
+            res.status(401).json({ "error": "Email already exists" })
         }
-        else if(err.code === 11000 && err.keyPattern.username === 1){
+        else if (err.code === 11000 && err.keyPattern.username === 1) {
             console.log("Username already exists")
-            res.status(402).json({"error": "Username already exists"})
+            res.status(402).json({ "error": "Username already exists" })
         }
-        else{
+        else {
             console.error("Error:", err);
             res.status(500).json({ "error": "Internal Server Error" });
         }
@@ -43,7 +43,7 @@ app.post("/add-user", async (req, res) => {
 
 app.post("/get-user/:username", async (req, res) => {
     try {
-        const user = await Users.findOne({username : req.params.username})
+        const user = await Users.findOne({ username: req.params.username })
         res.status(200).json(user)
         console.log(user)
     } catch (err) {
@@ -51,6 +51,12 @@ app.post("/get-user/:username", async (req, res) => {
         res.status(500).json({ "error": "Internal Server Error" });
     }
 })
+// /api/users/work-to-do
+
+// React routes
+// /users/login
+
+// npm run build
 
 app.post("/add-transaction", async (req, res) => {
     try {
@@ -71,7 +77,7 @@ app.post("/add-transaction", async (req, res) => {
 
 app.post("/get-transactions/:username", async (req, res) => {
     try {
-        const transaction = await Transactions.find({username : req.params.username})
+        const transaction = await Transactions.find({ username: req.params.username })
         res.status(200).json({ transaction })
     } catch (err) {
         console.error("Error:", err);
@@ -79,11 +85,23 @@ app.post("/get-transactions/:username", async (req, res) => {
     }
 })
 
-// app.post("/update-todo", async (req, res) => {
+app.get("/update-visits", async (req, res) => {
+    try {
+        visits += 1
+        console.log("Visits:", visits);
+        res.status(200).json({ visits })
+    } catch (err) {
+        console.error("Error:", err);
+        res.status(500).json({ "error": "Internal Server Error" });
+    }
+})
+
+
+// app.post("/update-home-vists", async (req, res) => {
 //     try {
-//         const updatedTodo = await Todo.findOneAndUpdate(
-//             { "todo": req.body.oldTodo }, 
-//             { $set: { "todo": req.body.newTodo } },
+//         const updatedHomeVisit = await Todo.findOneAndUpdate(
+//             { "homeVisits": req.body.homeVisits-1 }, 
+//             { $set: { "todo": req.body.homeVisits } },
 //         );
 //         if (updatedTodo) {
 //             res.status(200).json({ "msg": "Updated", "todo": updatedTodo });
@@ -109,6 +127,7 @@ app.post("/remove-transaction/:_id", async (req, res) => {
 })
 
 
+const PORT = 8000
 app.listen(PORT, () => {
     console.log("Server listening on " + PORT)
 })

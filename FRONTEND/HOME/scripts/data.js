@@ -46,27 +46,40 @@ let exp = false
 let inv = false
 let recent = 0
 
-const changeNameUsername = async () => {
+const changeNameUsernameImg = async () => {
     const response = await fetch(`${baseUrl}/get-user/${username}`, {
         method: "POST",
         headers: {
             "Content-type": "Application/json",
         },
     })
-
+    
     const data = await response.json()
-
+    
     const nameBox = document.querySelector(".username > h3")
     const usernameBox = document.querySelector(".username > p")
-
+    
     nameBox.innerText = (data.name).trim().split(" ")[0]
-    usernameBox.innerText = username
+    usernameBox.innerText = `@${username}`
+
+    const profileImg = document.querySelector("#profile-img")
+    profileImg.src = `https://avatar.iran.liara.run/public/boy?username=${username} : https://avatar.iran.liara.run/public/girl?username=${username}`
 }
 
-window.onload = () => {
+window.onload =async() => {
     if (username === null) {
         window.location.href = "http://127.0.0.1:3000/FRONTEND/SIGN-UP-IN/login.html"
     }
+    try{
+        const resp=await fetch("http://localhost:8000/update-visits",{
+            method:"GET",
+            headers:{
+                "Content-Type":"Application/json"
+            }
+        })
+        const data=await resp.json();
+        console.log(data)
+    }catch(err){}
 }
 
 
@@ -99,7 +112,7 @@ const removeTransaction = async (_id) => {
 
 const readTransactions = async () => {
 
-    await changeNameUsername()
+    await changeNameUsernameImg()
 
     try {
         const response = await fetch(`${baseUrl}/get-transactions/${username}`,

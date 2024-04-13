@@ -1,14 +1,16 @@
 @import url('https://fonts.googleapis.com/css2?family=Nunito&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@1000&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Black+Ops+One&family=Nunito:wght@1000&display=swap');
 
-*{
-	font-family: 'Nunito', sans-serif;
+* {
+    font-family: 'Nunito', sans-serif;
 }
 
-body{
+body {
     background-color: black;
     height: 100vh;
     display: flex;
-    justify-content: center;
+    justify-content: space-around;
     align-items: center;
     padding: 0;
     margin: 0;
@@ -19,12 +21,12 @@ body{
     background-size: 30px 30px; */
 
     background:
-    radial-gradient(circle farthest-side at 0% 50%,#000000 23.5%,#0000 0)18.9px 27px,
-    radial-gradient(circle farthest-side at 0% 50%,rgba(255, 255, 255, 0.15) 24%,#0000 0)17.1px 27px,
-    linear-gradient(#000000 14%,#0000 0, #0000 85%,#000000 0)0 0,
-    linear-gradient(150deg,#000000 24%,rgba(255, 255, 255, 0.15) 0,rgba(255, 255, 255, 0.15) 26%,#0000 0,#0000 74%,rgba(255, 255, 255, 0.15) 0,rgba(255, 255, 255, 0.15) 76%,#000000 0)0 0,
-    linear-gradient(30deg,#000000 24%,rgba(255, 255, 255, 0.15) 0,rgba(255, 255, 255, 0.15) 26%,#0000 0,#0000 74%,rgba(255, 255, 255, 0.15) 0,rgba(255, 255, 255, 0.15) 76%,#000000 0)0 0,
-    linear-gradient(90deg,rgba(255, 255, 255, 0.15) 2%,#000000 0,#000000 98%,rgba(255, 255, 255, 0.15) 0%)0 0 #000000;
+        radial-gradient(circle farthest-side at 0% 50%, #000000 23.5%, #0000 0)18.9px 27px,
+        radial-gradient(circle farthest-side at 0% 50%, rgba(255, 255, 255, 0.15) 24%, #0000 0)17.1px 27px,
+        linear-gradient(#000000 14%, #0000 0, #0000 85%, #000000 0)0 0,
+        linear-gradient(150deg, #000000 24%, rgba(255, 255, 255, 0.15) 0, rgba(255, 255, 255, 0.15) 26%, #0000 0, #0000 74%, rgba(255, 255, 255, 0.15) 0, rgba(255, 255, 255, 0.15) 76%, #000000 0)0 0,
+        linear-gradient(30deg, #000000 24%, rgba(255, 255, 255, 0.15) 0, rgba(255, 255, 255, 0.15) 26%, #0000 0, #0000 74%, rgba(255, 255, 255, 0.15) 0, rgba(255, 255, 255, 0.15) 76%, #000000 0)0 0,
+        linear-gradient(90deg, rgba(255, 255, 255, 0.15) 2%, #000000 0, #000000 98%, rgba(255, 255, 255, 0.15) 0%)0 0 #000000;
     background-size: 36px 54px;
     background-color: #000000;
 
@@ -33,7 +35,36 @@ body{
     /* background: rgb(247,247,247); */
 }
 
-#login,#signup{
+.title {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+
+    h1 {
+        color: #fff;
+        font-size: 5em;
+        animation: glow 2s ease-in-out infinite alternate;
+        margin-bottom: -65px;
+    }
+
+    p {
+        margin-top: 75px;
+        color: #fff;
+        font-size: 3em;
+        font-weight: 700;
+        background: #6465EF;
+        background: radial-gradient(circle farthest-corner at center center, #6465EF 0%, #D22A7C 100%);
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+
+    }
+
+}
+
+#login,
+#signup {
     background-color: #f3f4f6;
     display: flex;
     flex-direction: column;
@@ -47,18 +78,23 @@ body{
     padding: 20px;
 }
 
-#signup{
+#signup {
     height: 80%;
     min-height: 35em;
 }
 
-form{
+form {
     width: 100%;
     height: 100%;
     contain: content;
 }
 
-#name,#email,#username,#password,#loginbtn,#signupbtn{
+#name,
+#email,
+#username,
+#password,
+#loginbtn,
+#signupbtn {
     width: 100%;
     margin-bottom: 20px;
     display: flex;
@@ -66,26 +102,27 @@ form{
     justify-content: center;
 }
 
-#loginbtn,#signupbtn{
+#loginbtn,
+#signupbtn {
     align-items: center;
 }
 
-h1{
+h1 {
     margin-bottom: 10px;
 }
 
-h3{
+h3 {
     color: rgb(107 114 128);
     font-size: 15px;
     margin-bottom: 30px;
 }
 
-label{
+label {
     margin-left: 4px;
-    font-weight: 600;
+    font-weight: 500;
 }
 
-input{
+input {
     width: 92%;
     height: 2.5vh;
     margin-left: 4px;
@@ -98,12 +135,12 @@ input{
     background-color: #fff;
 }
 
-input:focus{
+input:focus {
     outline: 3px solid #e5e7eb;
     border: 2px solid white;
 }
 
-button{
+button {
     width: 97%;
     height: 40px;
     font-size: 20px;
@@ -115,24 +152,42 @@ button{
     cursor: pointer;
 }
 
-button:focus{
+button:focus {
     border: 2px solid white;
     outline: 3px solid black;
 }
 
-button:hover{
+button:hover {
     background-color: rgba(0, 0, 0, 0.897);
 }
 
-a{
+a {
     text-decoration: none;
     color: black;
 }
 
-a:hover{
+a:hover {
     text-decoration: underline;
 }
 
-#login > p{
+#login>p {
     color: rgb(58, 62, 69);
+}
+
+@keyframes glow {
+    from {
+        text-shadow: 0 0 10px #fff, 0 0 12px #fff, 0 0 14px #5ea2f9, 0 0 16px #e60073, 0 0 18px #e60073, 0 0 20px #e60073, 0 0 22px #e60073;
+    }
+
+    to {
+        text-shadow: 0 0 12px #fff, 0 0 14px #5ea2f9, 0 0 16px #e60073, 0 0 18x #e60073, 0 0 20px #ff4da6, 0 0 22px #ff4da6, 0 0 24px #ff4da6;
+    }
+}
+
+@media screen and (max-width: 1035px) {
+    body{
+        flex-direction: column;
+        align-content: space-around;
+        justify-content: center;
+    }
 }

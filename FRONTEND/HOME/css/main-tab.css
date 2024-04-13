@@ -56,23 +56,25 @@ body{
 .profile-img{
     aspect-ratio: 1/1;
 	width: 50px;
-	background-color: #ffffff;
-	border: 1px solid black;
+	background: none;
+	border: 3px solid #97999c;
 	border-radius: 50%;
 	display: flex;
 	justify-content: center;
-	align-items: flex-end;
+	align-items: center;
 	overflow: hidden;
-    box-shadow: inset 0.5px 0.5px 5px 1px #000000;
-
-	i{
-        font-size: 40px;
+	img{
+		aspect-ratio: 1/1;
+		width: 50px;
+		z-index: 0;
 	}
 }
 
 .username{
 	margin-left: 7px;
-
+	h3{
+		margin-bottom: 3px;
+	}
 	p{
 		margin-top: -8px;
 		font-size: 15px;
