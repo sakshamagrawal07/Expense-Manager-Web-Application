@@ -47,11 +47,15 @@ let inv = false
 let recent = 0
 
 const changeNameUsernameImg = async () => {
-    const response = await fetch(`${baseUrl}/get-user/${username}`, {
+    const user = {
+        "username" : username
+    }
+    const response = await fetch(`${baseUrl}/get-user`, {
         method: "POST",
         headers: {
             "Content-type": "Application/json",
         },
+        body: JSON.stringify(user)
     })
     
     const data = await response.json()

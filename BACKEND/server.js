@@ -5,6 +5,8 @@ const db1 = require('./database/db1')
 const Transactions = require('./models/transactions')
 const Users = require('./models/user')
 const mongo = require('mongodb')
+const bcrypt = require('bcrypt');
+const saltRounds = 10;
 
 require("dotenv").config()
 
@@ -22,7 +24,7 @@ app.post("/add-user", async (req, res) => {
             "name": req.body.name,
             "email": req.body.email,
             "username": req.body.username,
-            "password": req.body.password,
+            "password": await bcrypt.hash(req.body.password, saltRounds),
         })
         res.status(200).json({ "msg": "user added" })
     } catch (err) {
@@ -41,11 +43,28 @@ app.post("/add-user", async (req, res) => {
     }
 })
 
-app.post("/get-user/:username", async (req, res) => {
+app.post("/get-user", async (req, res) => {
     try {
-        const user = await Users.findOne({ username: req.params.username })
+        const user = await Users.findOne({ username: req.body.username })
         res.status(200).json(user)
         console.log(user)
+    } catch (err) {
+        console.error("Error:", err);
+        res.status(500).json({ "error": "Internal Server Error" });
+    }
+})
+
+app.post("/login-user", async (req, res) => {
+    try {
+        const user = await Users.findOne({ username: req.body.username })
+        const password = await bcrypt.compare(req.body.password, user.password);
+        if (password) {
+            res.status(200).json(user)
+            console.log(user.password)
+        }
+        else {
+            res.status(300).json("Password Wrong")
+        }
     } catch (err) {
         console.error("Error:", err);
         res.status(500).json({ "error": "Internal Server Error" });
