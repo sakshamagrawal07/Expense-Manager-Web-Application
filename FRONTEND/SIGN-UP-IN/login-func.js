@@ -5,11 +5,16 @@ const loginUsername = document.querySelector("#login-username")
 const loginPassword = document.querySelector("#login-password")
 
 const login = async (username, password) => {
-    const response = await fetch(`${baseURL}/get-user/${username}`, {
+    const user = {
+        "username" : username,
+        "password" : password
+    }
+    const response = await fetch(`${baseURL}/login-user`, {
         method: "POST",
         headers: {
             "Content-type": "Application/json",
         },
+        body: JSON.stringify(user)
     })
 
     const data = await response.json()
@@ -17,7 +22,7 @@ const login = async (username, password) => {
     if (data === null) {
         alert(`Username "${username}" does not exists`)
     }
-    else if (data.password === password) {
+    else if (response.status === 200) {
         sessionStorage.setItem("username", username)
         window.location.replace("http://127.0.0.1:3000/FRONTEND/HOME/home.html")
 
