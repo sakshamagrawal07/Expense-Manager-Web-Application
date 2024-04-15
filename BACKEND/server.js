@@ -70,12 +70,6 @@ app.post("/login-user", async (req, res) => {
         res.status(500).json({ "error": "Internal Server Error" });
     }
 })
-// /api/users/work-to-do
-
-// React routes
-// /users/login
-
-// npm run build
 
 app.post("/add-transaction", async (req, res) => {
     try {
@@ -114,24 +108,6 @@ app.get("/update-visits", async (req, res) => {
         res.status(500).json({ "error": "Internal Server Error" });
     }
 })
-
-
-// app.post("/update-home-vists", async (req, res) => {
-//     try {
-//         const updatedHomeVisit = await Todo.findOneAndUpdate(
-//             { "homeVisits": req.body.homeVisits-1 }, 
-//             { $set: { "todo": req.body.homeVisits } },
-//         );
-//         if (updatedTodo) {
-//             res.status(200).json({ "msg": "Updated", "todo": updatedTodo });
-//         } else {
-//             res.status(404).json({ "error": "Todo not found" });
-//         }
-//     } catch (error) {
-//         console.error("Error:", error);
-//         res.status(500).json({ "error": "Internal Server Error" });
-//     }
-// });
 
 app.post("/remove-transaction/:_id", async (req, res) => {
     try {
